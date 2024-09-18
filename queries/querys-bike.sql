@@ -33,3 +33,11 @@ FROM products p
 LEFT JOIN order_items oi ON p.product_id = oi.product_id
 WHERE oi.product_id IS NULL;
 
+
+/*
+  ---------------------------------------------------------------
+   2. Listar os Produtos que não tenham sido comprados
+      Essa consulta busca todos os produtos que não aparecem na tabela order_items, 
+      ou seja, produtos que não foram comprados.  
+---------------------------------------------------------------
+*/
