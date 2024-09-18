@@ -36,8 +36,28 @@ WHERE oi.product_id IS NULL;
 
 /*
   ---------------------------------------------------------------
-   2. Listar os Produtos que não tenham sido comprados
-      Essa consulta busca todos os produtos que não aparecem na tabela order_items, 
-      ou seja, produtos que não foram comprados.  
+   3. Listar os Produtos sem Estoque
+      Essa consulta lista os produtos cujo estoque é zero 
+      ou não possuem entrada na tabela stocks.
 ---------------------------------------------------------------
 */
+SELECT p.*
+FROM products p
+LEFT JOIN stocks s ON p.product_id = s.product_id
+WHERE s.quantity IS NULL OR s.quantity = 0;
+
+
+/*
+  ---------------------------------------------------------------
+   4. Agrupar a quantidade de vendas que uma determinada Marca por Loja
+      Nessa consulta, queremos agrupar o número de vendas (itens comprados) 
+      por loja e marca.
+---------------------------------------------------------------
+*/
+SELECT b.brand_name, s.store_name, SUM(oi.quantity) AS total_sales
+FROM order_items oi
+JOIN products p ON oi.product_id = p.product_id
+JOIN brands b ON p.brand_id = b.brand_id
+JOIN orders o ON oi.order_id = o.order_id
+JOIN stores s ON o.store_id = s.store_id
+GROUP BY b.brand_name, s.store_name;
