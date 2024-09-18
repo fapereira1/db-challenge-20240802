@@ -73,3 +73,14 @@ FROM
 GROUP BY
     b.brand_name,
     s.store_name;
+
+/*
+ ---------------------------------------------------------------
+ 5. Listar os Funcionários que não estejam relacionados a um Pedido
+Esta consulta busca os funcionários que não estão associados a nenhum pedido.
+ ---------------------------------------------------------------
+ */
+SELECT st.*
+FROM staffs st
+LEFT JOIN orders o ON st.staff_id = o.staff_id
+WHERE o.order_id IS NULL;
